@@ -1,0 +1,36 @@
+### Create Crop
+POST http://localhost:3000/crops
+Content-Type: application/json
+
+{
+  "name": "Tomato",
+  "description": "A juicy red vegetable-fruit",
+  "category": "VEGETABLE"
+}
+
+###
+
+### Get All Crops
+GET http://localhost:3000/crops
+
+###
+
+### Get Single Crop
+GET http://localhost:3000/crops/1
+
+###
+
+### Update Crop
+PATCH  http://localhost:3000/crops/1
+Content-Type: application/json
+
+{
+  "name": "Organic Tomato",
+  "description": "Updated description",
+  "category": "VEGETABLE"
+}
+
+###
+
+### Delete Crop
+DELETE http://localhost:3000/crops/1
