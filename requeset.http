@@ -3,7 +3,7 @@ POST http://localhost:3000/crops
 Content-Type: application/json
 
 {
-  "name": "Tomato",
+  "name": "Panner",
   "description": "A juicy red vegetable-fruit",
   "category": "VEGETABLE"
 }

@@ -1,29 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCropDto, UpdateCropDto } from './dto';
 import { CropsRepository } from './crops.repository';
 
 @Injectable()
 export class CropsService {
-  constructor(
-    private cropsRepo: CropsRepository
-  ) {}
-  create(createCropDto: CreateCropDto) {
-    return this.cropsRepo.create(createCropDto)
+  constructor(private cropsRepo: CropsRepository) {}
+  async create(createCropDto: CreateCropDto) {
+    try {
+      return await this.cropsRepo.create(createCropDto);
+    } catch (error) {
+      throw new BadRequestException('Failed to create crop');
+    }
   }
 
-  findAll() {
-    return this.cropsRepo.findAll();
+  async findAll() {
+    return await this.cropsRepo.findAll();
   }
 
-  findOne(id: number) {
-    return this.cropsRepo.findone(id);
+  async findOne(id: number) {
+    const crop = await this.cropsRepo.findone(id);
+    if (!crop) throw new NotFoundException('Crop not found');
+    return crop;
   }
 
-  update(id: number, updateCropDto: UpdateCropDto) {
-    return this.cropsRepo.update(id, updateCropDto);
+  async update(id: number, updateCropDto: UpdateCropDto) {
+    await this.findOne(id);
+    try {
+      return await this.cropsRepo.update(id, updateCropDto);
+    } catch (error) {
+      throw new BadRequestException('Failed to update crop');
+    }
   }
 
-  remove(id: number) {
-    return this.cropsRepo.remove(id);
+  async remove(id: number) {
+    await this.findOne(id);
+    try {
+      return await this.cropsRepo.remove(id);
+    } catch (error) {
+      throw new BadRequestException('Failed to delete crop');
+    }
   }
 }

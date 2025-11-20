@@ -16,7 +16,7 @@ datasource db {
 
 model Crop {
   id Int @default(autoincrement()) @id
-  name String
+  name String @unique
   description String
   category Category
 }
